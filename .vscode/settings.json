@@ -1,0 +1,30 @@
+{
+  "Lua.diagnostics.globals": [
+    "SELECTED_CHAT_FRAME",
+    "DEFAULT_CHAT_FRAME",
+    "CopyTable",
+    "SlashCmdList",
+    "UIParent",
+    "BackdropTemplateMixin",
+    "CLOSE",
+    "GameFontNormal",
+    "SetDesaturation",
+    "WOW_PROJECT_ID",
+    "WOW_PROJECT_MAINLINE",
+    "ColorPickerFrame",
+    "GameFontHighlightSmall",
+    "NORMAL_FONT_COLOR",
+    "GameFontHighlight",
+    "ACCEPT",
+    "CANCEL",
+    "Settings",
+    "GameFontHighlightLarge",
+    "GameFontDisableSmall",
+    "GameTooltip",
+    "GameFontNormalSmall",
+    "ChatEdit_InsertLink",
+    "ChatFontNormal",
+    "ChatFrameUtil",
+    "OKAY"
+  ]
+}

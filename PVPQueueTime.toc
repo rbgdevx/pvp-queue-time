@@ -1,0 +1,18 @@
+## Interface: 120005, 120001
+## Title: PVP Queue Time
+## Version: 1.0.0
+## Author: RBGDEV
+## Notes: Displays Average PVP Queue Time as text
+## SavedVariables: PVPQueueTimeDB
+## Category: RBGDEV
+## X-Category: Battlegrounds/PvP
+
+#@no-lib-strip@
+embeds.xml
+#@end-no-lib-strip@
+
+config.lua
+helpers.lua
+interface.lua
+PVPQueueTime.lua
+options.lua
