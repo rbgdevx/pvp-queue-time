@@ -6,6 +6,11 @@
 ## SavedVariables: PVPQueueTimeDB
 ## Category: RBGDEV
 ## X-Category: Battlegrounds/PvP
+## X-License: All Rights Reserved
+## X-Website: https://www.curseforge.com/wow/addons/pvp-queue-time
+## X-Curse-Project-ID: 1489623
+## X-Wago-ID: XKqAqjKy
+## X-WoWI-ID:
 
 #@no-lib-strip@
 embeds.xml
