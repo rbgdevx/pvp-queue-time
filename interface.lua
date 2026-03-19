@@ -5,8 +5,11 @@ local GetBattlefieldEstimatedWaitTime = GetBattlefieldEstimatedWaitTime
 local GetBattlefieldTimeWaited = GetBattlefieldTimeWaited
 local GetMaxBattlefieldID = GetMaxBattlefieldID
 local IsInInstance = IsInInstance
-local math_floor = math.floor
+local GetTime = GetTime
 local LibStub = LibStub
+local CreateFrame = CreateFrame
+local wipe = wipe
+local ipairs = ipairs
 
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local SharedMedia = LibStub("LibSharedMedia-3.0")
@@ -14,7 +17,7 @@ local SharedMedia = LibStub("LibSharedMedia-3.0")
 local Interface = {}
 NS.Interface = Interface
 
-local UPDATE_INTERVAL = 1.0
+local UPDATE_INTERVAL = 0.1
 local DEFAULT_LINE_SPACING = 2
 local ENTRY_SPACING = 12
 local PADDING_X = 16
@@ -26,15 +29,10 @@ local ALIGN_POINTS = {
   RIGHT = { top = "TOPRIGHT", x = -8 },
 }
 
-local function FormatQueueTime(ms)
-  local totalSec = math_floor(ms / 1000)
-  if totalSec < 0 then
-    totalSec = 0
-  end
-  local mins = math_floor(totalSec / 60)
-  local secs = totalSec % 60
-  return mins .. " min " .. string.format("%02d", secs) .. " sec"
-end
+local FormatTimeInQueue = NS.FormatTimeInQueue
+local FormatEstimatedWait = NS.FormatEstimatedWait
+local GetAvgWaitLabel = NS.GetAvgWaitLabel
+local GetQueueLabel = NS.GetQueueLabel
 
 NS.UpdateFont = function(fontString)
   local db = NS.db
@@ -279,8 +277,14 @@ function Interface:CheckQueueStatus()
     for idx = 1, #activeSlots do
       local entry = GetOrCreateEntry(idx)
       ApplyConfigToEntry(entry, prev)
-      entry.avgText:SetText("Avg Wait time: --")
-      entry.queueText:SetText("Time In Queue: --")
+      local slot = activeSlots[idx]
+      -- Store queuedTime once, compute elapsed from GetTime() on each tick (like Blizzard)
+      entry.queuedTime = GetTime() - GetBattlefieldTimeWaited(slot) / 1000
+      local estimatedWait = GetBattlefieldEstimatedWaitTime(slot) / 1000
+      entry.estimatedWait = estimatedWait
+      local elapsed = GetTime() - entry.queuedTime
+      entry.avgText:SetText(GetAvgWaitLabel() .. FormatEstimatedWait(estimatedWait))
+      entry.queueText:SetText(GetQueueLabel() .. FormatTimeInQueue(elapsed))
       entry.avgText:Show()
       entry.queueText:Show()
       prev = entry
@@ -318,13 +322,12 @@ frame:SetScript("OnUpdate", function(self, elapsed)
   end
   elapsed_accumulator = 0
 
-  for idx, slot in ipairs(activeSlots) do
+  for idx in ipairs(activeSlots) do
     local entry = queueEntries[idx]
-    if entry then
-      local estWaitMs = GetBattlefieldEstimatedWaitTime(slot)
-      local timeWaitedMs = GetBattlefieldTimeWaited(slot)
-      entry.avgText:SetText("Avg Wait time: " .. FormatQueueTime(estWaitMs))
-      entry.queueText:SetText("Time In Queue: " .. FormatQueueTime(timeWaitedMs))
+    if entry and entry.queuedTime then
+      local _elapsed = GetTime() - entry.queuedTime
+      entry.avgText:SetText(GetAvgWaitLabel() .. FormatEstimatedWait(entry.estimatedWait))
+      entry.queueText:SetText(GetQueueLabel() .. FormatTimeInQueue(_elapsed))
     end
   end
 

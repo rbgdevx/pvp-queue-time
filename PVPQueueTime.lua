@@ -1,5 +1,7 @@
 local _, NS = ...
 
+local After = C_Timer.After
+
 ---@type PVPQueueTime
 local PVPQueueTime = NS.PVPQueueTime
 local PVPQueueTimeFrame = NS.PVPQueueTime.frame
@@ -8,7 +10,7 @@ local Interface = NS.Interface
 
 function PVPQueueTime:PLAYER_ENTERING_WORLD()
   Interface:RestorePosition()
-  C_Timer.After(2, function()
+  After(2, function()
     Interface:CheckQueueStatus()
   end)
 end
@@ -22,4 +24,7 @@ PVPQueueTimeFrame:RegisterEvent("PLAYER_LOGIN")
 
 function PVPQueueTime:UPDATE_BATTLEFIELD_STATUS()
   Interface:CheckQueueStatus()
+  After(2, function()
+    Interface:CheckQueueStatus()
+  end)
 end

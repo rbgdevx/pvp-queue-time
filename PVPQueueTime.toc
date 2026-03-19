@@ -1,6 +1,6 @@
 ## Interface: 120005, 120001
 ## Title: PVP Queue Time
-## Version: 1.0.0
+## Version: 1.0.1
 ## Author: RBGDEV
 ## Notes: Displays Average PVP Queue Time as text
 ## SavedVariables: PVPQueueTimeDB
@@ -10,7 +10,7 @@
 ## X-Website: https://www.curseforge.com/wow/addons/pvp-queue-time
 ## X-Curse-Project-ID: 1489623
 ## X-Wago-ID: XKqAqjKy
-## X-WoWI-ID:
+## X-WoWI-ID: 27083
 
 #@no-lib-strip@
 embeds.xml

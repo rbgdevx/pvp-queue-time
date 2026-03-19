@@ -70,6 +70,48 @@ NS.AceConfig = {
         return NS.db.showMultiple
       end,
     },
+    abbreviateAverage = {
+      name = 'Abbreviate "Average"',
+      desc = 'Use "Avg" instead of "Average" in the wait time label',
+      type = "toggle",
+      width = "full",
+      order = 3.1,
+      set = function(_, val)
+        NS.db.abbreviateAverage = val
+        NS.OnDbChanged()
+      end,
+      get = function(_)
+        return NS.db.abbreviateAverage
+      end,
+    },
+    showSecondsWaitTime = {
+      name = "Show seconds for Wait Time",
+      desc = "Show seconds in the average wait time display",
+      type = "toggle",
+      width = "full",
+      order = 3.2,
+      set = function(_, val)
+        NS.db.showSecondsWaitTime = val
+        NS.OnDbChanged()
+      end,
+      get = function(_)
+        return NS.db.showSecondsWaitTime
+      end,
+    },
+    showSecondsInQueue = {
+      name = "Show seconds for Time In Queue",
+      desc = "Show seconds in the time in queue display",
+      type = "toggle",
+      width = "full",
+      order = 3.3,
+      set = function(_, val)
+        NS.db.showSecondsInQueue = val
+        NS.OnDbChanged()
+      end,
+      get = function(_)
+        return NS.db.showSecondsInQueue
+      end,
+    },
     spacer1 = { name = " ", type = "description", order = 4, width = "full" },
     textAlignment = {
       name = "Text Alignment",

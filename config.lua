@@ -49,6 +49,9 @@ NS.DefaultDatabase = {
   },
   textOutline = "THIN",
   lineSpacing = 2,
+  abbreviateAverage = true,
+  showSecondsWaitTime = true,
+  showSecondsInQueue = true,
   showMultiple = false,
   hideInInstance = true,
   position = {
