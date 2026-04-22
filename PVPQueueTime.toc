@@ -1,6 +1,6 @@
-## Interface: 120005, 120001
+## Interface: 120005
 ## Title: PVP Queue Time
-## Version: 1.0.1
+## Version: 1.0.2
 ## Author: RBGDEV
 ## Notes: Displays Average PVP Queue Time as text
 ## SavedVariables: PVPQueueTimeDB

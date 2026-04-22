@@ -40,7 +40,9 @@ NS.UpdateFont = function(fontString)
     return
   end
   local fontPath = SharedMedia:Fetch("font", db.font)
-  fontString:SetFont(fontPath, db.textSize, db.textOutline)
+  local outline = db.textOutline
+  if outline == "THIN" or outline == "NONE" or outline == nil then outline = "" end
+  fontString:SetFont(fontPath, db.textSize, outline)
 end
 
 -------------------------------------------------

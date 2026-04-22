@@ -138,7 +138,6 @@ NS.AceConfig = {
       order = 6,
       values = {
         [""] = "None",
-        ["THIN"] = "Thin",
         ["OUTLINE"] = "Outline",
         ["THICKOUTLINE"] = "Thick Outline",
         ["MONOCHROME"] = "Monochrome",

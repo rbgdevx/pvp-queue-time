@@ -1,5 +1,9 @@
 # PVP Queue Time
 
+## [v1.0.2](https://github.com/rbgdevx/pvp-queue-time/releases/tag/v1.0.2) (2026-04-22)
+
+- Fixing new font api changes from recent patch
+
 ## [v1.0.1](https://github.com/rbgdevx/pvp-queue-time/releases/tag/v1.0.1) (2026-03-19)
 
 - Adding new settings to control visual display of time and text more
