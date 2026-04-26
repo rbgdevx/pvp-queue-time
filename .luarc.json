@@ -1,0 +1,69 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "Lua 5.1",
+  "runtime.nonstandardSymbol": [
+    "!=",
+    "continue",
+    "//"
+  ],
+  "workspace.ignoreDir": [
+    "libs",
+    "Libs",
+    ".libraries",
+    ".git",
+    ".vscode",
+    ".claude"
+  ],
+  "workspace.library": [
+    "/Users/steven/.antigravity/extensions/ketho.wow-api-0.22.3/Annotations/Core"
+  ],
+  "diagnostics.workspaceDelay": 3000,
+  "diagnostics.disable": [
+    "ambiguity-1",
+    "cast-local-type",
+    "deprecated",
+    "duplicate-set-field",
+    "inject-field",
+    "lowercase-global",
+    "missing-fields",
+    "missing-parameter",
+    "missing-return",
+    "need-check-nil",
+    "param-type-mismatch",
+    "redundant-parameter",
+    "return-type-mismatch",
+    "unbalanced-assignments",
+    "undefined-field"
+  ],
+  "diagnostics.globals": [
+    "LibStub",
+    "hooksecurefunc",
+    "CreateFrame",
+    "UIParent",
+    "STANDARD_TEXT_FONT",
+    "LESS_THAN_ONE_MINUTE",
+    "QueueStatusButton",
+    "MicroMenu",
+    "MicroMenuContainer",
+    "SlashCmdList",
+    "SLASH_PQT1",
+    "SLASH_PQT2",
+    "SLASH_PQT3",
+    "PVPQueueTimeDB"
+  ],
+  "runtime.builtin": {
+    "basic": "disable",
+    "debug": "disable",
+    "io": "disable",
+    "os": "disable",
+    "package": "disable",
+    "utf8": "disable"
+  },
+  "completion.callSnippet": "Replace",
+  "completion.keywordSnippet": "Replace",
+  "hint.enable": true,
+  "hint.setType": true,
+  "semantic.enable": true,
+  "telemetry.enable": false,
+  "wowAPI.luals.frameXML": false
+}

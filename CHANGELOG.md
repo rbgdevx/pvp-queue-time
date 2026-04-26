@@ -1,5 +1,10 @@
 # PVP Queue Time
 
+## [v1.0.3](https://github.com/rbgdevx/pvp-queue-time/releases/tag/v1.0.3) (2026-04-26)
+
+- Adding new setting to be able to move the blizzard pvp queue Eyeball
+- Adding logo
+
 ## [v1.0.2](https://github.com/rbgdevx/pvp-queue-time/releases/tag/v1.0.2) (2026-04-22)
 
 - Fixing new font api changes from recent patch

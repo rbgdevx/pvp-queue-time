@@ -75,7 +75,7 @@ NS.AceConfig = {
       desc = 'Use "Avg" instead of "Average" in the wait time label',
       type = "toggle",
       width = "full",
-      order = 3.1,
+      order = 4,
       set = function(_, val)
         NS.db.abbreviateAverage = val
         NS.OnDbChanged()
@@ -89,7 +89,7 @@ NS.AceConfig = {
       desc = "Show seconds in the average wait time display",
       type = "toggle",
       width = "full",
-      order = 3.2,
+      order = 5,
       set = function(_, val)
         NS.db.showSecondsWaitTime = val
         NS.OnDbChanged()
@@ -103,7 +103,7 @@ NS.AceConfig = {
       desc = "Show seconds in the time in queue display",
       type = "toggle",
       width = "full",
-      order = 3.3,
+      order = 6,
       set = function(_, val)
         NS.db.showSecondsInQueue = val
         NS.OnDbChanged()
@@ -112,12 +112,30 @@ NS.AceConfig = {
         return NS.db.showSecondsInQueue
       end,
     },
-    spacer1 = { name = " ", type = "description", order = 4, width = "full" },
+    moveQueueEye = {
+      name = "Move the Blizzard queue eye",
+      desc = "When enabled, left-click and drag the Blizzard PvP queue eye to reposition it. The queue tooltip moves with it. Disable to restore the default placement.",
+      type = "toggle",
+      width = "full",
+      order = 7,
+      set = function(_, val)
+        NS.db.moveQueueEye = val
+        if not val then
+          NS.db.queueEyePosition = false
+        end
+        Interface:SetupQueueEye()
+        Interface:ApplyQueueEye()
+      end,
+      get = function(_)
+        return NS.db.moveQueueEye
+      end,
+    },
+    spacer1 = { name = " ", type = "description", order = 8, width = "full" },
     textAlignment = {
       name = "Text Alignment",
       type = "select",
       width = "normal",
-      order = 5,
+      order = 9,
       values = {
         ["LEFT"] = "Left",
         ["CENTER"] = "Center",
@@ -135,7 +153,7 @@ NS.AceConfig = {
       name = "Text Outline",
       type = "select",
       width = "normal",
-      order = 6,
+      order = 10,
       values = {
         [""] = "None",
         ["OUTLINE"] = "Outline",
@@ -155,7 +173,7 @@ NS.AceConfig = {
       name = "Line Spacing",
       desc = "Spacing between the two text lines",
       width = "double",
-      order = 7,
+      order = 11,
       min = 0,
       max = 20,
       step = 1,
@@ -167,12 +185,12 @@ NS.AceConfig = {
         return NS.db.lineSpacing
       end,
     },
-    spacer2 = { name = " ", type = "description", order = 8, width = "full" },
+    spacer2 = { name = " ", type = "description", order = 12, width = "full" },
     textSize = {
       type = "range",
       name = "Font Size",
       width = "double",
-      order = 8,
+      order = 13,
       min = 8,
       max = 64,
       step = 1,
@@ -184,14 +202,14 @@ NS.AceConfig = {
         return NS.db.textSize
       end,
     },
-    spacer3 = { name = " ", type = "description", order = 9, width = "full" },
+    spacer3 = { name = " ", type = "description", order = 14, width = "full" },
     font = {
       type = "select",
       name = "Font",
       width = 1.5,
       dialogControl = "LSM30_Font",
       values = SharedMedia:HashTable("font"),
-      order = 10,
+      order = 15,
       set = function(_, val)
         NS.db.font = val
         NS.OnDbChanged()
@@ -200,12 +218,12 @@ NS.AceConfig = {
         return NS.db.font
       end,
     },
-    spacer4 = { name = "", type = "description", order = 11, width = 0.1 },
+    spacer4 = { name = "", type = "description", order = 16, width = 0.1 },
     textColor = {
       type = "color",
       name = "Text Color",
       width = 0.5,
-      order = 12,
+      order = 17,
       hasAlpha = true,
       set = function(_, r, g, b, a)
         NS.db.textColor.r = r
@@ -218,12 +236,12 @@ NS.AceConfig = {
         return NS.db.textColor.r, NS.db.textColor.g, NS.db.textColor.b, NS.db.textColor.a
       end,
     },
-    spacer5 = { name = " ", type = "description", order = 13, width = "full" },
+    spacer5 = { name = " ", type = "description", order = 18, width = "full" },
     textShadow = {
       name = "Enable text shadow",
       type = "toggle",
       width = "full",
-      order = 14,
+      order = 19,
       set = function(_, val)
         NS.db.textShadow = val
         NS.OnDbChanged()
@@ -236,7 +254,7 @@ NS.AceConfig = {
       type = "color",
       name = "Shadow Color",
       width = 0.5,
-      order = 15,
+      order = 20,
       hasAlpha = true,
       disabled = function()
         return not NS.db.textShadow
@@ -252,12 +270,12 @@ NS.AceConfig = {
         return NS.db.shadowColor.r, NS.db.shadowColor.g, NS.db.shadowColor.b, NS.db.shadowColor.a
       end,
     },
-    spacer6 = { name = " ", type = "description", order = 16, width = "full" },
+    spacer6 = { name = " ", type = "description", order = 21, width = "full" },
     showBackground = {
       name = "Show background",
       type = "toggle",
       width = "full",
-      order = 17,
+      order = 22,
       set = function(_, val)
         NS.db.showBackground = val
         NS.OnDbChanged()
@@ -270,7 +288,7 @@ NS.AceConfig = {
       type = "color",
       name = "Background Color",
       width = 0.5,
-      order = 18,
+      order = 23,
       hasAlpha = true,
       disabled = function()
         return not NS.db.showBackground

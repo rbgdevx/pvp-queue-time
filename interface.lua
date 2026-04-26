@@ -41,7 +41,9 @@ NS.UpdateFont = function(fontString)
   end
   local fontPath = SharedMedia:Fetch("font", db.font)
   local outline = db.textOutline
-  if outline == "THIN" or outline == "NONE" or outline == nil then outline = "" end
+  if outline == "THIN" or outline == "NONE" or outline == nil then
+    outline = ""
+  end
   fontString:SetFont(fontPath, db.textSize, outline)
 end
 
@@ -310,6 +312,89 @@ function Interface:RestorePosition()
     local pos = NS.db.position
     frame:ClearAllPoints()
     frame:SetPoint(pos[1], UIParent, pos[2], pos[3], pos[4])
+  end
+end
+
+-------------------------------------------------
+-- Blizzard QueueStatusButton (eye) drag support
+--
+-- Important: do NOT replace QueueStatusButton.UpdatePosition or call into
+-- MicroMenu helpers from addon code. Both leak addon taint into Blizzard's
+-- MicroMenu/ActionBarController path and trigger ADDON_ACTION_BLOCKED on
+-- OverrideActionBar:Show(). Use hooksecurefunc and only mutate the button
+-- (a non-secure frame) directly.
+-------------------------------------------------
+local queueEyeHooked = false
+local lastEyeArgs
+
+local function ApplySavedEyePosition(button)
+  local p = NS.db and NS.db.queueEyePosition
+  if not p then
+    return false
+  end
+  button:ClearAllPoints()
+  button:SetPoint(p[1], UIParent, p[2], p[3], p[4])
+  return true
+end
+
+local function ReanchorToUIParent(f)
+  local x, y = f:GetCenter()
+  if not x or not y then
+    return
+  end
+  local scaleRatio = f:GetEffectiveScale() / UIParent:GetEffectiveScale()
+  x, y = x * scaleRatio, y * scaleRatio
+  f:ClearAllPoints()
+  f:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x, y)
+end
+
+function Interface:SetupQueueEye()
+  if queueEyeHooked or not QueueStatusButton then
+    return
+  end
+  queueEyeHooked = true
+
+  hooksecurefunc(QueueStatusButton, "UpdatePosition", function(button, ...)
+    lastEyeArgs = { ... }
+    if NS.db and NS.db.moveQueueEye and NS.db.queueEyePosition then
+      ApplySavedEyePosition(button)
+    end
+  end)
+
+  -- Seed defaults in case Blizzard already called UpdatePosition before we hooked.
+  -- Reading GetPosition / isHorizontal is taint-safe.
+  if not lastEyeArgs and MicroMenuContainer and MicroMenuContainer.GetPosition and MicroMenu then
+    lastEyeArgs = { MicroMenuContainer:GetPosition(), MicroMenu.isHorizontal }
+  end
+
+  QueueStatusButton:SetMovable(true)
+  QueueStatusButton:SetClampedToScreen(true)
+  QueueStatusButton:RegisterForDrag("LeftButton")
+  QueueStatusButton:HookScript("OnDragStart", function(self)
+    if NS.db and NS.db.moveQueueEye then
+      ReanchorToUIParent(self)
+      self:StartMoving()
+    end
+  end)
+  QueueStatusButton:HookScript("OnDragStop", function(self)
+    if NS.db and NS.db.moveQueueEye then
+      self:StopMovingOrSizing()
+      local point, _, relPoint, x, y = self:GetPoint()
+      NS.db.queueEyePosition = { point, relPoint, x, y }
+    end
+  end)
+end
+
+function Interface:ApplyQueueEye()
+  if not QueueStatusButton then
+    return
+  end
+  if NS.db and NS.db.moveQueueEye and NS.db.queueEyePosition then
+    ApplySavedEyePosition(QueueStatusButton)
+  elseif lastEyeArgs and QueueStatusButton.UpdatePosition then
+    -- Replay Blizzard's last args on the button only (non-secure frame).
+    -- Avoid MicroMenu helpers — they cross into protected ActionBarController code.
+    QueueStatusButton:UpdatePosition(lastEyeArgs[1], lastEyeArgs[2])
   end
 end
 

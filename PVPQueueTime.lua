@@ -10,6 +10,8 @@ local Interface = NS.Interface
 
 function PVPQueueTime:PLAYER_ENTERING_WORLD()
   Interface:RestorePosition()
+  Interface:SetupQueueEye()
+  Interface:ApplyQueueEye()
   After(2, function()
     Interface:CheckQueueStatus()
   end)

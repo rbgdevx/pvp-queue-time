@@ -60,4 +60,6 @@ NS.DefaultDatabase = {
     0,
     300,
   },
+  moveQueueEye = false,
+  queueEyePosition = false,
 }
